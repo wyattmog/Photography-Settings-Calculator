@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ImageBackground, Modal} from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import { useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import ReusableSelectDropdown from '/Users/wyattmog/Desktop/React-Native-Photography-Settings-Calculator/ReusableSelectDropdown.js';
+import ReusableSelectDropdown from './ReusableSelectDropdown.js';
 let initialSettings = ["subject", "lighting", "speed", "distance"];
 // Dictionary of shooting enviornments and respective iso, shutter, and aperature values 
 const dict = {
@@ -171,9 +171,9 @@ export default function App() {
   };
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('/Users/wyattmog/Desktop/React-Native-Photography-Settings-Calculator/assets/otherPage.jpg')} style={styles.image} resizeMode=
+      <ImageBackground source={require('./assets/otherPage.jpg')} style={styles.image} resizeMode=
         'cover'> 
-        <ImageBackground source={require('/Users/wyattmog/Desktop/React-Native-Photography-Settings-Calculator/assets/homePage.jpg')} style={styles.image} resizeMode=
+        <ImageBackground source={require('./assets/homePage.jpg')} style={styles.image} resizeMode=
         'cover'>
           <Text style = {styles.homeHeader}>
               CameraBuddy 

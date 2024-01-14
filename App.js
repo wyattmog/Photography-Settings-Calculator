@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ImageBackground, Modal} from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import { useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import ReusableSelectDropdown from '/Users/wyattmog/Desktop/CameraBuddy/ReusableSelectDropdown.js';
+import ReusableSelectDropdown from '/Users/wyattmog/Desktop/React-Native-Photography-Settings-Calculator/ReusableSelectDropdown.js';
 let initialSettings = ["subject", "lighting", "speed", "distance"];
 // Dictionary of shooting enviornments and respective iso, shutter, and aperature values 
 const dict = {
@@ -171,9 +171,9 @@ export default function App() {
   };
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('/Users/wyattmog/Desktop/CameraBuddy/assets/otherPage.jpg')} style={styles.image} resizeMode=
+      <ImageBackground source={require('/Users/wyattmog/Desktop/React-Native-Photography-Settings-Calculator/assets/otherPage.jpg')} style={styles.image} resizeMode=
         'cover'> 
-        <ImageBackground source={require('/Users/wyattmog/Desktop/CameraBuddy/assets/homePage.jpg')} style={styles.image} resizeMode=
+        <ImageBackground source={require('/Users/wyattmog/Desktop/React-Native-Photography-Settings-Calculator/assets/homePage.jpg')} style={styles.image} resizeMode=
         'cover'>
           <Text style = {styles.homeHeader}>
               CameraBuddy 
@@ -189,7 +189,7 @@ export default function App() {
           </Text>
         </ImageBackground>
       <Modal backdropTransitionOutTiming={0} animationType={'fade'} transparent={true} hideModalContentWhileAnimating visible={modalIsVisible} >
-        <ImageBackground source={require('/Users/wyattmog/Desktop/CameraBuddy/assets/otherPage.jpg')} style={styles.image} resizeMode=
+        <ImageBackground source={require('/Users/wyattmog/Desktop/React-Native-Photography-Settings-Calculator/assets/otherPage.jpg')} style={styles.image} resizeMode=
           'cover'> 
           <Text style = {styles.header}>
               CameraBuddy 

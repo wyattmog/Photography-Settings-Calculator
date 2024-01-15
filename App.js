@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ImageBackground, Modal} from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Modal, Platform, StatusBar} from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import { useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -189,7 +189,7 @@ export default function App() {
           </Text>
         </ImageBackground>
       <Modal backdropTransitionOutTiming={0} animationType={'fade'} transparent={true} hideModalContentWhileAnimating visible={modalIsVisible} >
-        <ImageBackground source={require('/Users/wyattmog/Desktop/React-Native-Photography-Settings-Calculator/assets/otherPage.jpg')} style={styles.image} resizeMode=
+        <ImageBackground source={require('./assets/otherPage.jpg')} style={styles.image} resizeMode=
           'cover'> 
           <Text style = {styles.header}>
               CameraBuddy 
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'white',
     textAlign: 'center',
-    marginBottom: 90,
+    marginBottom: Platform.OS === 'ios' ? 90 : 41,
   },
   homePageButton: {
     width: 53,
@@ -248,8 +248,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     borderColor: "black",
-    marginLeft: 71,
-    marginBottom: 120,
+    marginLeft: Platform.OS === 'ios' ? 71 : 64,
+    marginBottom: Platform.OS === 'ios' ? 120 : 100,
     marginTop: 20
   },
   welcomeText: {
@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: 'white',
     textAlign: 'center',
+    marginBottom: Platform.OS === 'ios' ? 0 : 10,
   },
   homeText: {
     fontWeight: 'bold',
@@ -277,19 +278,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     borderColor: 'black',
-    marginTop: 20
+    marginTop: Platform.OS === 'ios' ? 20 : 10
   },
   dropdowns: {
     alignItems: 'center',
     gap: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   infoText: {
     fontWeight: 'bold',
     fontSize: 25,
     color: 'white',
     textAlign: 'center',
-    marginBottom: 120
+    marginBottom: Platform.OS === 'ios' ? 120 : 100,
   },
   dropdownRows: {
     flexDirection:'row',
@@ -301,14 +302,13 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     flexDirection: 'column',
-    marginBottom: 82,
-    marginTop: 87
+    marginBottom: Platform.OS === 'ios' ? 82 : 52,
+    marginTop: Platform.OS === 'ios' ? 87 : 78,
   },
   calculateButton: {
     width: 150,
     height: 52,
     backgroundColor: '#c3d4d2',
-    borderRadius: 8,
     alignContent: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 
   },
   goBackButton: {
     width: 70,
@@ -333,7 +334,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf:'center',
-    marginBottom: 50,
-    marginTop:10
+    marginBottom: Platform.OS === 'ios' ? 50 : 60,
+    marginTop:Platform.OS === 'ios' ? 10 : 0,
   },
 });

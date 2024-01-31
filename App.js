@@ -9,60 +9,78 @@ const dict = {
   Fast: 400, Slow: 200,
   Stationary: 160, Sunny: 100,
   Cloudy: 200, Shady: 200,
-  Dark: 600, Bright: 100,
-  Lowlighting: 500, Nighttime: 1000,
-  Person: 3, Landscape: 6,
-  Object: 4, Far: 6, 
+  Dark: 700, Bright: 100,
+  Lowlighting: 500, Nighttime: 1600,
+  Person: 2, Landscape: 6,
+  Object: 3, Far: 6, 
   Midway: 4, Close: 3,
   Sunrise: 200, Sunset:200,
-  Indoor:400, Building:4,
-  Event:4, Animal: 3, Portrait: 1,
+  Indoor:800, Building:3,
+  Event:3, Animal: 3, Portrait: 1,
   Floodlight: 400
 };
+// Dictionary of shooting enviornments and respective iso, shutter, and aperature values for those shooting during night or with a tripod
+const night = {
+  Fast: 300, Slow: 200,
+  Stationary: 100, Sunny: 100,
+  Cloudy: 200, Shady: 200,
+  Dark: 10, Bright: 100,
+  Lowlighting: 20, Nighttime: 2,
+  Person: 2, Landscape: 4,
+  Object: 2, Far: 4, 
+  Midway: 3, Close: 2,
+  Sunrise: 30, Sunset:20,
+  Indoor:50, Building:3,
+   Fireworks: 4, Floodlight: 20,
+  Event: 2, Animal: 2, Portrait: 1,
+};
+
 // Dictionary of exposure values and their respective descriptions 
 const exposureValueInfo = {
-  "-7": "a deep star field or the Milky Way",
-  "-6": "a night under starlight only or the Aurora Borealis",
-  "-5": "a night under crescent moon or the Aurora Borealis",
-  "-4": "a night under half moon, or a meteor shower",
-  "-3": "a night under full moon and away from city lights",
-  "-2": "a night snowscape under full moon and away from city lights",
-  "-1": "a sunrise or sunset of the 'blue hour' or dim ambient lighting",
-  "0": "a dim ambient artificial lighting",
-  "1": "a distant view of a lit skyline",
-  "2": "under lightning or a total lunar eclipse",
-  "3": "fireworks ",
-  "4": "christmas lights, floodlit buildings, fountains, or bright street lamps",
-  "5": "home interiors at night, fairs and amusement parks",
-  "6": "brightly lit home interiors at night, fairs and amusement parks",
-  "7": "brightly-lit nighttime streets and floodlit indoor sports areas or stadiums",
-  "8": "campfires, ice shows; Floodlit indoor sports areas or stadiums",
-  "9": "landscapes, city skylines 10 minutes after sunset, neon lights",
+  "-7": "a deep star field or the Milky Way                                         ",
+  "-6": "a night under starlight only or the Aurora Borealis                        ",
+  "-5": "a night under crescent moon or the Aurora Borealis                         ",
+  "-4": "a night under half moon, or a meteor shower                                ",
+  "-3": "a night under full moon and away from city lights                          ",
+  "-2": "a night snowscape under full moon and away from city lights                ",
+  "-1": "a sunrise or sunset of the 'blue hour' or dim ambient lighting             ",
+  "0": "a dim ambient artificial lighting indoors or outdoors                       ",
+  "1": "a distant view of a lit skyline, under the moonlight                        ",
+  "2": "under lightning or a total lunar eclipse                                    ",
+  "3": "fireworks , Christmas lights, and lightning                                 ",
+  "4": "christmas lights, floodlit buildings, fountains, or bright street lamps     ",
+  "5": "home interiors at night, fairs and amusement parks                          ",
+  "6": "brightly lit home interiors at night, fairs and amusement parks             ",
+  "7": "brightly-lit nighttime streets and floodlit indoor sports areas or stadiums ",
+  "8": "campfires, ice shows; Floodlit indoor sports areas or stadiums              ",
+  "9": "landscapes, city skylines 10 minutes after sunset, neon lights              ",
   "10": "landscapes and skylines immediately after sunset, capturing a crescent moon",
-  "11": "sunsets subject to deep shade or daylight on a foggy day",
-  "12": "moments before a sunset on a clear day, and capturing half moon",
-  "13": "Typical subject on a bright, cloudy day, and capturing gibbous moon",
-  "14": "subjects on a day with hazy sunlight",
-  "15": "a bright or hazy sun, clear sky",
-  "16": "a bright daylight on sand or snow ",
-  "17": "a very bright artificial lighting",
-  "18": "a very bright artificial lighting",
-  "19": "a very bright artificial lighting",
-  "20": "an xtremely bright artificial lighting, telescopic view of the sun"
+  "11": "sunsets subject to deep shade or daylight on a foggy day                   ",
+  "12": "moments before a sunset on a clear day, and capturing half moon            ",
+  "13": "Typical subject on a bright, cloudy day, and capturing gibbous moon        ",
+  "14": "subjects on a day with hazy sunlight                                       ",
+  "15": "a bright or hazy sun, clear sky, with shadows                              ",
+  "16": "a bright daylight on sand or snow                                          ",
+  "17": "a very bright artificial lighting, a bright day                            ",
+  "18": "a very bright artificial lighting, a bright day                            ",
+  "19": "a very bright artificial lighting, a bright day                            ",
+  "20": "an xtremely bright artificial lighting, telescopic view of the sun         "
 };
 // Parent component
 export default function App() {
   const [modalIsVisible, setModalIsVisible] = useState(false)
   const [iso, setIso] = useState(0);
+  const [userMode, setUserMode] = useState("")
   const [shutter, setShutter] = useState(0);
   const [aperature, setAperature] = useState(0);
   const [userInputs, setUserInputs] = useState(initialSettings);
   const [clicked, setClicked] = useState(false);
 
   let speed = ["Fast", "Slow", "Stationary"];
-  let lighting = ["Sunny", "Cloudy", "Shady", "Dark", "Bright", "Lowlighting", "Nighttime", "Floodlight"];
+  let lighting = ["Sunny", "Cloudy", "Shady", "Dark", "Bright", "Lowlighting", "Nighttime", "Floodlight", "Indoor",];
   let subject = ["Portrait", "Person", "Landscape", "Object", "Stars", "Sunset", "Sunrise", "Building", "Event", "Animal", "Fireworks"];
   let distance = ["Far","Midway", "Close"];
+  let mode = ["Tripod", "Handheld"];
   // Controls modal visibility, and resets the user inputs when the user exits or enters the modal
   function startSettingsHandler() {
     setModalIsVisible(!modalIsVisible);
@@ -71,10 +89,15 @@ export default function App() {
   }
   // Updates user input when an item is chosen in a dropdown
   function inputHandler(selectedItem, index) {
+    if (selectedItem == "Tripod" || selectedItem == "Handheld") {
+      setUserMode(selectedItem);
+    }
+    else {
+      const updatedInputs = [...userInputs];
+      updatedInputs[index] = selectedItem;
+      setUserInputs(updatedInputs);
+    }
     setClicked(false);
-    const updatedInputs = [...userInputs];
-    updatedInputs[index] = selectedItem;
-    setUserInputs(updatedInputs);
   }
   // Determines exposure value given iso, shutter, and aperature
   function exposureValue(iso, shutter, ap) {
@@ -106,38 +129,69 @@ export default function App() {
   }
   // Helper function that sets and calculates iso, shutter, and aperature if user inputs 'Sunrise' or 'Sunset'
   function setValuesForSunsetOrSunrise(selectedLighting, selectedSpeed, selectedDistance, selectedSubject) {
-    let newIso = (dict[selectedLighting] + dict[selectedSubject])/2;
-    if (selectedLighting == "Sunny" || selectedLighting == "Bright" || selectedLighting == "Lowlighting") {
-      console.log("hello");
-      newIso = newIso - 50;
+    if (userMode == "Tripod") {
+      let newIso = night[selectedSpeed];
+      const newShutter = night[selectedSubject];
+      const newAperature = night[selectedDistance] + 4;
+      if (selectedLighting== "Lowlighting" || selectedLighting== "Dark") {
+        newIso = newIso +100;
+      }
+      else if (selectedLighting== "Nighttime" || selectedLighting== "Shady") {
+        newIso = newIso + 200;
+      }
+      setIso(newIso);
+      setShutter(newShutter);
+      setAperature(newAperature);
     }
+    else {
+      let newIso = (dict[selectedLighting] + dict[selectedSubject])/2;
+      if (selectedLighting == "Sunny" || selectedLighting == "Bright" || selectedLighting == "Lowlighting") {
+        newIso = newIso - 50;
+      }
 
-    // Shutter speed based on selected speed
-    const newShutter = dict[selectedSpeed]/2;
-  
-    // Aperture based on distance
-    const newAperature = 3 + dict[selectedDistance];
-    setIso(newIso);
-    setShutter(newShutter);
-    setAperature(newAperature);
-
+      // Shutter speed based on selected speed
+      const newShutter = dict[selectedSpeed]/2;
+    
+      // Aperture based on distance
+      const newAperature = 1 + dict[selectedDistance];
+      setIso(newIso);
+      setShutter(newShutter);
+      setAperature(newAperature);
+    }
   }
   // Helper function that sets and calculates iso, shutter, and aperature
   function setValuesForOtherSubjects(selectedLighting, selectedSpeed, selectedDistance, selectedSubject) {
-    const newIso = dict[selectedLighting];
-    const newShutter = dict[selectedSpeed];
-    const newAperature = dict[selectedDistance] + dict[selectedSubject];
-    setIso(newIso);
-    setShutter(newShutter);
-    setAperature(newAperature);
+    if (userMode == "Tripod") {
+      const newIso = night[selectedSpeed];
+      const newShutter = night[selectedLighting];
+      const newAperature = night[selectedDistance] + night[selectedSubject];
+      setIso(newIso);
+      setShutter(newShutter);
+      setAperature(newAperature);
+    }
+    else {
+      const newIso = dict[selectedLighting];
+      const newShutter = dict[selectedSpeed];
+      const newAperature = dict[selectedDistance] + dict[selectedSubject];
+      setIso(newIso);
+      setShutter(newShutter);
+      setAperature(newAperature);
+    }
   }
   // Handles user inputs and calls respective child function.
   function settingsHandler() {
-    setClicked(true);
+    if (userInputs[0] == "subject" || userInputs[1] == "lighting" || userInputs[2] == "speed" || userInputs[3] == "distance") {
+      setClicked(false);
+      return;
+    }
+    else {
+      setClicked(true);
+    }
     const selectedSubject = userInputs[0];
     const selectedLighting = userInputs[1];
     const selectedSpeed = userInputs[2];
     const selectedDistance = userInputs[3];
+
   
     if (selectedSubject === "Stars") {
       setValuesForStars();
@@ -151,7 +205,7 @@ export default function App() {
   }
   // Determines what text to render for camera settings based on user input and whether or not the calculate button has been clicked
   function renderText() {
-    if ((userInputs[0]== "Stars" || userInputs[0] == "Fireworks") && clicked == true) {
+    if ((userInputs[0]== "Stars" || userInputs[0] == "Fireworks" || (userInputs[1] == "Nighttime" && userMode== "Tripod")) && clicked == true) {
       return <Text>ISO: {iso} SHUTTER: {shutter} APERATURE: {aperature}</Text>;
     } else if (!clicked || (iso == null || shutter == null || aperature == null || isNaN(iso) || isNaN(shutter) || isNaN(aperature) )) {
       return <Text>This is where your settings will be</Text>;
@@ -198,6 +252,11 @@ export default function App() {
             simply enter your shooting enviornment below {'\n'}and calculate!
           </Text>
         <View style={styles.dropdowns}>
+          <View style={styles.dropdownRows}>
+            <ReusableSelectDropdown 
+            {...dropdownConfig('mode',mode, 0)}
+            />
+          </View>
           <View style={styles.dropdownRows}>
             <ReusableSelectDropdown 
             {...dropdownConfig('subject',subject, 0)}
@@ -290,7 +349,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: 'white',
     textAlign: 'center',
-    marginBottom: Platform.OS === 'ios' ? 120 : 100,
+    marginBottom: Platform.OS === 'ios' ? 70 : 80,
   },
   dropdownRows: {
     flexDirection:'row',
@@ -302,8 +361,8 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     flexDirection: 'column',
-    marginBottom: Platform.OS === 'ios' ? 82 : 52,
-    marginTop: Platform.OS === 'ios' ? 87 : 78,
+    marginBottom: Platform.OS === 'ios' ? 82 : 45,
+    marginTop: Platform.OS === 'ios' ? 87 : 75.5,
   },
   calculateButton: {
     width: 150,
@@ -334,7 +393,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf:'center',
-    marginBottom: Platform.OS === 'ios' ? 50 : 60,
+    marginBottom: Platform.OS === 'ios' ? 50 : 65,
     marginTop:Platform.OS === 'ios' ? 10 : 0,
   },
 });
+
+

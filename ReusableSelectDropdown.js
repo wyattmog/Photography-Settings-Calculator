@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet} from 'react-native';
+import { StyleSheet, Platform} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // Child component that helps to render the dropdown boxes
@@ -34,7 +34,7 @@ export default ReusableSelectDropdown;
 const styles = StyleSheet.create({
   dropdownBtnStyle: {
     width: 180,
-    height: 100,
+    height: Platform.OS === 'ios' ? 80 : 70,
     backgroundColor: '#95b8d1',
     borderRadius: 8,
   },

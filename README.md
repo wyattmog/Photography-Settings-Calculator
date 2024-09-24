@@ -6,4 +6,5 @@ You can click on the Expo Snack link, which will link you to a virtual Javascrip
 ## How Was It Coded?
 This app was developed using React Native Javascript, specifically through React Native's expo development tool.
  This app is developed through react native javascript and its purpose is to be used as a calculator for iso, shutter speed, and aperature. The app also sports its own exposure value calculator to aid the user.   
+## Where Can I Try It Out?
 If you would like to test out the app, simply try it out using expo snack! https://snack.expo.dev/@wyattmog/react-native-photography-settings-calculator
